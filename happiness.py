@@ -7,9 +7,6 @@ import seaborn as sns
 from scipy.stats import linregress
 
 df = pd.read_excel (r'./Chapter2OnlineData.xls')
-sns.set()
-# pd.set_option('display.max_columns', None)
-# pd.set_option('display.max_rows', None)
 
 # print(df.head())
 # print(df.columns.values)
@@ -34,27 +31,13 @@ Year = df.loc[df['Country name'] == 'United States']['Year']
 
 slope, intercept, r_value, p_value, std_err = linregress(Year, Country)
 line = [slope*xi + intercept for xi in years_extended]
-plt.plot(years_extended, line, color = 'orange', label="Fitting Line", linewidth=1)
-plt.scatter(Year, Country, s = 5, marker = '.', label="Sample Point", color = 'dodgerblue')
+plt.plot(years_extended, line, color = 'red', label="Fitting Line", linewidth=1)
+plt.scatter(Year, Country, s = 5, marker = '.', label="Sample Point")
 plt.xticks(range(2006, 2030, 2))
 b, m = polyfit(Year, Country, 1)
 
 Year = Year.values.reshape(-1, 1)
 
-plt.plot(Year, Country, '.')
-plt.plot(Year, Country, Year, b + m * Year, '-')
+plt.plot(Year, Country, '.', color = 'dodgerblue')
+plt.plot(Year, Country, Year, b + m * Year, '-', color = 'dodgerblue')
 plt.show()
-
-regr = linear_model.LinearRegression()
-regr.fit(Year, Country)
-# print(regr.coef_[0]) #slope
-
-y_predict = regr.predict(Year)
-print(y_predict)
-
-X_future = np.array(range(2019, 2045))
-X_future = X_future.reshape(-1, 1)
-
-# future_predict = regr.predict(X_future)
-# plt.plot(X_future, future_predict)
-# plt.show()
